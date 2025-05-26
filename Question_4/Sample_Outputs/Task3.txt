@@ -1,0 +1,11 @@
+ country_name  | umpire_count 
+---------------+--------------
+  Australia    |            7
+  South Africa |            5
+  New Zealand  |            4
+  England      |            3
+  Sri Lanka    |            2
+  Pakistan     |            2
+  West Indies  |            1
+  Zimbabwe     |            1
+(8 rows)

@@ -1,0 +1,125 @@
+Task 1
+
+ipl_db=# select batting_team , sum(total_runs) from deliveries group by batting_team ;
+
+        batting_team         |  sum
+-----------------------------+-------
+ Kolkata Knight Riders       | 21965
+ Rising Pune Supergiants     |  2063
+ Pune Warriors               |  6358
+ Royal Challengers Bangalore | 23436
+ Kochi Tuskers Kerala        |  1901
+ Rising Pune Supergiant      |  2470
+ Mumbai Indians              | 24521
+ Chennai Super Kings         | 20899
+ Delhi Daredevils            | 21953
+ Kings XI Punjab             | 23068
+ Rajasthan Royals            | 17703
+ Deccan Chargers             | 11463
+ Gujarat Lions               |  4862
+ Sunrisers Hyderabad         | 11652
+(14 rows)
+
+
+Task 2
+
+ipl_db=# select batsman , sum(batsman_runs) as runs from deliveries where batting_team like 'Royal%' group by batsman  order by runs desc limit 10;
+
+    batsman     | runs
+----------------+------
+ V Kohli        | 4423
+ CH Gayle       | 3175
+ AB de Villiers | 2815
+ JH Kallis      | 1132
+ R Dravid       |  898
+ TM Dilshan     |  587
+ RV Uthappa     |  549
+ LRPL Taylor    |  517
+ SS Tiwary      |  487
+ MA Agarwal     |  433
+(10 rows)
+
+
+Task 3
+
+ipl_db=# select country , count(country) as count from umpires where country not in (' India')  group by country order by count desc;
+
+    country    | count
+---------------+-------
+  Australia    |     7
+  South Africa |     5
+  New Zealand  |     4
+  England      |     3
+  Sri Lanka    |     2
+  Pakistan     |     2
+  West Indies  |     1
+  Zimbabwe     |     1
+(8 rows)
+
+
+Task 4
+
+ipl_db=# select m3.season, m3.team1,count(m3.team1)  from (select m1.season,m1.team1 from matches as m1
+union all select m2.season,m2.team2 from matches as m2)  as m3 group by m3.season ,m3.team1 order by m3.season,m3.team1;
+
+
+Task 5
+
+ipl_db=# select season , count(season) as count from matches group by season order by season;
+
+ season | count
+--------+-------
+   2008 |    58
+   2009 |    57
+   2010 |    60
+   2011 |    73
+   2012 |    74
+   2013 |    76
+   2014 |    60
+   2015 |    59
+   2016 |    60
+   2017 |    59
+(10 rows)
+
+
+Task 6
+
+ipl_db=# select season , winner, count(winner) as wins from matches where winner is not null  group by season,winner
+order by season,winner,wins;
+
+
+Task 7
+
+ipl_db=# select bowling_team , sum(extra_runs) from deliveries where match_id in (select id from matches where season = 2016) group by bowling_team ;
+
+        bowling_team         | sum
+-----------------------------+-----
+ Kolkata Knight Riders       | 122
+ Rising Pune Supergiants     | 108
+ Mumbai Indians              | 102
+ Delhi Daredevils            | 106
+ Kings XI Punjab             | 100
+ Royal Challengers Bangalore | 156
+ Gujarat Lions               |  98
+ Sunrisers Hyderabad         | 107
+(8 rows)
+
+
+Task 8
+
+ipl_db=# select bowler, round ( sum(d1.batsman_runs+d1.wide_runs+d1.noball_runs) / (sum (case when d1.wide_runs !=0 or d1.noball_runs !=0 then 0 else 1 end ) / 6.0),2) as eco  from deliveries as d1  where d1.match_id in (select id from matches where matches.season = 2015 )   group by d1.bowler order by eco limit 10 ;
+
+      bowler      | eco
+------------------+------
+ RN ten Doeschate | 4.00
+ J Yadav          | 4.14
+ V Kohli          | 5.45
+ R Ashwin         | 5.85
+ S Nadeem         | 6.14
+ Parvez Rasool    | 6.20
+ MC Henriques     | 6.32
+ Z Khan           | 6.46
+ MA Starc         | 6.77
+ GB Hogg          | 6.86
+(10 rows)
+
