@@ -47,7 +47,7 @@ Copy
 Edit
 ALTER ROLE ipl_user CREATEROLE;
 
-sql
+---sql
 Copy
 Edit
 ALTER ROLE ipl_user SUPERUSER;
