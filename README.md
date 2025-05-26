@@ -79,5 +79,4 @@ psql -U postgres -f cleanup_db.sql
 
 ## 6. Contact
 
-For help, contact your mentor or project admin.
-
+For
